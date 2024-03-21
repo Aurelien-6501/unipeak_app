@@ -12,6 +12,5 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
-- script: |
-    flutter test
+- script: flutter test
   displayName: 'Run Flutter tests'
