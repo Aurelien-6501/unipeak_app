@@ -2,8 +2,7 @@
 trigger:
 - main
 
-pool:
-  vmImage: 'Default'
+pool: default
 
 steps:
 - script: echo "Starting Flutter installation"
