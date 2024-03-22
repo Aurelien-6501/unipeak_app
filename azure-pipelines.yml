@@ -14,3 +14,9 @@ steps:
 
 - script: flutter test
   displayName: 'Run Flutter tests'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: './dist'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
