@@ -1,22 +1,30 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
+# Déclenche le pipeline lorsque le code est poussé sur la branche main
 trigger:
 - main
 
-pool: Default
+pool:
+  vmImage: 'Default'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- script: echo "Starting Flutter installation"
+  displayName: 'Install Flutter' 
+- script: |
+    sudo apt-get update
+    sudo apt-get install -y lib32stdc++6
+    git clone https://github.com/flutter/flutter.git -b stable
+    export PATH="$PATH:`pwd`/flutter/bin"
+    flutter precache
+  displayName: 'Install Flutter and dependencies' # Affiche un message descriptif pour cette étape
 
-- script: flutter test
+- script: flutter doctor # Vérifie l'état de l'installation Flutter
+  displayName: 'Flutter Doctor'
+
+- script: flutter test # Exécute les tests Flutter
   displayName: 'Run Flutter tests'
 
+# Publie les artefacts de build
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: './dist'
+    PathtoPublish: './build'
     ArtifactName: 'drop'
     publishLocation: 'Container'
