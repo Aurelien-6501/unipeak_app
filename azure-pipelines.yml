@@ -1,4 +1,3 @@
-# Déclenche le pipeline lorsque le code est poussé sur la branche main
 trigger:
 - main
 
@@ -7,21 +6,19 @@ pool: default
 steps:
 - script: echo "Starting Flutter installation"
   displayName: 'Install Flutter' 
+
 - script: |
-    sudo apt-get update
-    sudo apt-get install -y lib32stdc++6
     git clone https://github.com/flutter/flutter.git -b stable
     export PATH="$PATH:`pwd`/flutter/bin"
     flutter precache
-  displayName: 'Install Flutter and dependencies' # Affiche un message descriptif pour cette étape
+  displayName: 'Install Flutter and dependencies'
 
-- script: flutter doctor # Vérifie l'état de l'installation Flutter
+- script: flutter doctor
   displayName: 'Flutter Doctor'
 
-- script: flutter test # Exécute les tests Flutter
+- script: flutter test
   displayName: 'Run Flutter tests'
 
-# Publie les artefacts de build
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: './build'
