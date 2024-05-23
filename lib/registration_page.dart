@@ -4,10 +4,10 @@ import 'dart:convert'; // Pour encoder le corps de la requête en JSON
 
 class RegistrationPage extends StatefulWidget {
   @override
-  _RegistrationPageState createState() => _RegistrationPageState();
+  RegistrationPageState createState() => RegistrationPageState();
 }
 
-class _RegistrationPageState extends State<RegistrationPage> {
+class RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
