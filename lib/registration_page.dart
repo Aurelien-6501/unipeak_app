@@ -2,20 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert'; // Pour encoder le corps de la requête en JSON
 
-class RegistrationPage extends StatelessWidget {
+class RegistrationPage extends StatefulWidget {
+  @override
+  _RegistrationPageState createState() => _RegistrationPageState();
+}
+
+class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-  Future<void> _register(BuildContext context) async {
+  Future<void> _register() async {
     if (_passwordController.text != _confirmPasswordController.text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Les mots de passe ne correspondent pas')));
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Les mots de passe ne correspondent pas')));
+      }
       return;
     }
-
-    //http://192.168.1.100:3000/users/signup
 
     final url = Uri.parse('http://127.0.0.1:3000/users/signup');
     try {
@@ -32,15 +37,21 @@ class RegistrationPage extends StatelessWidget {
       );
 
       if (response.statusCode == 201) {
-        Navigator.pushReplacementNamed(context, '/home');
+        if (mounted) {
+          Navigator.pushReplacementNamed(context, '/home');
+        }
       } else {
         final responseJson = jsonDecode(response.body);
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Erreur: ${responseJson['error']}')));
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Erreur: ${responseJson['error']}')));
+        }
       }
     } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Erreur de connexion: $e')));
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Erreur de connexion: $e')));
+      }
     }
   }
 
@@ -83,7 +94,7 @@ class RegistrationPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => _register(context),
+              onPressed: _register,
               child: Text('S\'inscrire'),
             ),
           ],
