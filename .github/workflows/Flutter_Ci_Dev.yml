@@ -1,10 +1,10 @@
-name: Flutter CI for Main
+name: Flutter CI for Dev
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "dev" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "dev" ]
 
 jobs:
   build:
