@@ -10,6 +10,7 @@ class RegistrationPage extends StatefulWidget {
 class RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
@@ -32,7 +33,7 @@ class RegistrationPageState extends State<RegistrationPage> {
         body: jsonEncode(<String, String>{
           'email': _emailController.text,
           'password': _passwordController.text,
-          'name': 'Test User',
+          'name': _userNameController.text,
         }),
       );
 
@@ -71,6 +72,14 @@ class RegistrationPageState extends State<RegistrationPage> {
               controller: _emailController,
               decoration: InputDecoration(
                 labelText: 'Adresse mail',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: _userNameController,
+              decoration: InputDecoration(
+                labelText: 'Nom d\'utilisateur',
                 border: OutlineInputBorder(),
               ),
             ),
