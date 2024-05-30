@@ -1,4 +1,4 @@
-name: Flutter CI for Main
+name: Flutter CI for Unipeak_App
 
 on:
   push:
